@@ -30,6 +30,8 @@ The length must be known before hashing: supply the total byte count modulo
 2^32, and then feed those bytes in order. Chunk boundaries do not affect the
 result. The accumulator retains at most one partial four-byte word, not its
 input. `finalize()` returns a digest without changing the accumulator.
+`update` is `@inlinable`, so it specializes for the caller's sequence type: a
+lazily filtered byte view hashes without per-byte generic dispatch.
 
 Normalization is the caller's responsibility. For CurseForge, the caller removes
 ASCII bytes 9, 10, 13 and 32 and uses seed 1; the declared length is the length

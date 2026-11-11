@@ -4,10 +4,14 @@
 /// verification against an adversary, or hashing attacker-controlled dictionary keys.
 /// Input bytes are hashed exactly as supplied; no normalization is performed.
 public struct MurmurHash2: Sendable {
-    private static let multiplier: UInt32 = 0x5BD1_E995
-    private var hash: UInt32
-    private var word: UInt32 = 0
-    private var filled = 0
+    @usableFromInline
+    static let multiplier: UInt32 = 0x5BD1_E995
+    @usableFromInline
+    var hash: UInt32
+    @usableFromInline
+    var word: UInt32 = 0
+    @usableFromInline
+    var filled = 0
 
     /// Begins hashing an input whose total length is already known.
     ///
@@ -24,6 +28,7 @@ public struct MurmurHash2: Sendable {
     /// Feeds the next bytes without buffering or copying the input sequence.
     ///
     /// - Parameter bytes: The next input bytes, in their original order.
+    @inlinable
     public mutating func update(_ bytes: some Sequence<UInt8>) {
         for byte in bytes {
             word |= UInt32(byte) << (8 * filled)
